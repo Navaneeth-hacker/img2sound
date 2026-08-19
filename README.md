@@ -15,7 +15,7 @@ This is the same trick behind Aphex Twin's ["Equation" / Windowlicker](https://e
 ## Requirements
 
 ```bash
-pip install numpy scipy pillow
+pip install -r requirements.txt
 ```
 
 ## Usage

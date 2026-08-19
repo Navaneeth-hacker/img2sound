@@ -1,0 +1,4 @@
+numpy
+scipy
+Pillow
+windows-curses; sys_platform == 'win32'
