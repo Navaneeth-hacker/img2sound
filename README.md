@@ -20,14 +20,27 @@ pip install numpy scipy pillow
 
 ## Usage
 
-1. Place a grayscale (or any) image next to the script and name it `secret.png` (or update `IMAGE` below).
-2. Run:
+You can run the script interactively or via command-line arguments.
+
+### Interactive Mode (TUI)
+
+Simply run the script without any arguments:
 
 ```bash
 python img2sound.py
 ```
 
-3. Open the resulting `hidden.wav` in a spectrogram viewer:
+This will launch a Terminal User Interface (TUI) where you can navigate your file system and select an image to convert.
+
+### Command Line Mode
+
+You can also specify parameters directly. For example:
+
+```bash
+python img2sound.py -i secret.png -o hidden.wav -d 15.0
+```
+
+Once the `.wav` file is generated, open it in a spectrogram viewer:
    - **Audacity**: import the file, then switch the track's view to *Spectrogram* (click the track name dropdown).
    - **Sonic Visualiser**: open the file, add a *Spectrogram* layer.
    - **macOS**: QuickTime → "Show Movie Inspector" won't show it; use Audacity or `sox hidden.wav -n spectrogram`.
@@ -115,20 +128,17 @@ sonic-visualiser hidden.wav
 
 ## Configuration
 
-All options are constants at the top of the script:
+The script accepts command-line arguments for configuration:
 
-| Constant | Description |
+| Argument | Description |
 |---|---|
-| `IMAGE` | Path to the source image |
-| `OUTPUT` | Path to the generated `.wav` file |
-| `SAMPLE_RATE` | Audio sample rate (Hz) |
-| `DURATION` | Length of the output audio (seconds) |
-| `FREQ_MIN` / `FREQ_MAX` | Frequency range the image is mapped into (Hz) |
-| `IMG_WIDTH` | Time resolution — more columns = finer horizontal detail, longer runtime |
-| `IMG_HEIGHT` | Frequency resolution — more rows = finer vertical detail, longer runtime |
-| `GAMMA` | Gamma correction (<1 brightens midtones so faint detail stays audible) |
-| `SMOOTH_MS` | Envelope smoothing per column, prevents clicking artifacts |
-| `MIN_BRIGHTNESS` | Rows fainter than this are skipped entirely (speed optimization) |
+| `-i`, `--input` | Path to the source image file. If omitted, the interactive TUI launches. |
+| `-o`, `--output` | Path to the generated `.wav` file. Defaults to `<input_filename>.wav`. |
+| `-d`, `--duration` | Length of the output audio in seconds (default: `10.0`) |
+| `--min-freq` | Minimum frequency of the spectrogram in Hz (default: `1000`) |
+| `--max-freq` | Maximum frequency of the spectrogram in Hz (default: `18000`) |
+
+*Advanced parameters (like sample rate, image resolution, gamma, and smoothing) can be customized by editing the `convert_image_to_audio` function defaults inside `img2sound.py`.*
 
 ## Notes & limitations
 
